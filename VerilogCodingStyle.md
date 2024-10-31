@@ -3108,7 +3108,6 @@ body for explanations examples, and exceptions.
   `_p` for active high
 * Typedefs should be suffixed with `_t`
 * Multiple suffixes will not be separated with `_`. `n` should come first
-  `i`, `o`, or `io` last
 
 ### Language features
 
