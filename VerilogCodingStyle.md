@@ -991,7 +991,6 @@ endmodule
 | \`define macros                                  | `ALL_CAPS`              |
 | Constants (parameters, localparams, enum values) | `UpperCamelCase`        |
 | Typedefs (including enums)                       | `lower_snake_case_t`    |
-| Enumerated value names                           | `UpperCamelCase`        |
 
 ### Constants
 
