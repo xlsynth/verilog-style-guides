@@ -991,8 +991,7 @@ endmodule
 | \`define macros                      | `ALL_CAPS`              |
 | Tunable parameters for parameterized modules, classes, and interfaces | `UpperCamelCase` |
 | Constants                            | `ALL_CAPS` or `UpperCamelCase` |
-| Enumeration types                    | `lower_snake_case_e`    |
-| Other typedef types                  | `lower_snake_case_t`    |
+| Typedefs                             | `lower_snake_case_t`    |
 | Enumerated value names               | `UpperCamelCase`        |
 
 ### Constants
@@ -1142,8 +1141,8 @@ Example:
 
 ### Suffixes
 
-Suffixes are used in several places to give guidance to intent. The following
-table lists the suffixes that have special meaning.
+Suffixes are used in several places to give guidance to intent, while avoiding [Hungarian notation](https://en.wikipedia.org/wiki/Hungarian_notation).
+The following table lists the suffixes that have special meaning.
 
 | Suffix(es)        | Arena | Intent |
 | ---               | :---: | ---    |
@@ -2007,8 +2006,8 @@ designer's discretion, and can range from simple `` `ASSERT_KNOWN``  to fully
 functional assertions, as shown in the following examples:
 
 ```systemverilog
-typedef enum logic [1:0] {mode0, mode1, mode2} state_e;
-state_e sel;
+typedef enum logic [1:0] {mode0, mode1, mode2} state_t;
+state_t sel;
 
 // encouraged
 `ASSERT_KNOWN(SelKnown_A, sel)
@@ -2895,9 +2894,9 @@ name, to make them more readable when viewing waveform traces.
 // Define the states
 typedef enum {
   StIdle, StFrameStart, StDynInstrRead, StBandCorr, StAccStoreWrite, StBandEnd
-} alcor_state_e;
+} alcor_state_t;
 
-alcor_state_e alcor_state_d, alcor_state_q;
+alcor_state_t alcor_state_d, alcor_state_q;
 
 // Combinational decode of the state
 always_comb begin
@@ -3129,7 +3128,7 @@ body for explanations examples, and exceptions.
   reflect their latency
 * Active low signals should use `_n`. When using differential signals use
   `_p` for active high
-* Enumerated types should be suffixed with `_e`
+* Typedefs should be suffixed with `_t`
 * Multiple suffixes will not be separated with `_`. `n` should come first
   `i`, `o`, or `io` last
 
