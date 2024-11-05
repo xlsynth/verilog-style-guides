@@ -984,17 +984,17 @@ endmodule
 
 ### Summary
 
-| Construct                                        | Style                   |
-| ------------------------------------             | ----------------------- |
-| Declarations (module, class, package, interface) | `lower_snake_case`      |
-| Instance names                                   | `lower_snake_case`      |
+| Construct                                        | Style                    |
+| ------------------------------------------------ | ------------------------ |
+| Declarations (module, class, package, interface) | `lower_snake_case`       |
+| Instance names                                   | `lower_snake_case`       |
 | Module instance names                            | `<module_name>[_suffix]` |
-| Signals (nets and ports)                         | `lower_snake_case`      |
-| Variables, functions, tasks                      | `lower_snake_case`      |
-| Named code blocks                                | `lower_snake_case`      |
-| \`define macros                                  | `ALL_CAPS`              |
-| Constants (parameters, localparams, enum values) | `UpperCamelCase`        |
-| Typedefs (including enums)                       | `lower_snake_case_t`    |
+| Signals (nets and ports)                         | `lower_snake_case`       |
+| Variables, functions, tasks                      | `lower_snake_case`       |
+| Named code blocks                                | `lower_snake_case`       |
+| \`define macros                                  | `ALL_CAPS`               |
+| Constants (parameters, localparams, enum values) | `UpperCamelCase`         |
+| Typedefs (including enums)                       | `lower_snake_case_t`     |
 
 ### Constants
 
