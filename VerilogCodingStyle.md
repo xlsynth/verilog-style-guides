@@ -553,7 +553,7 @@ logic [7:0] something_else;
 
 :+1:
 ```systemverilog
-mod u_mod (
+mod mod (
   .clk,
   .rst_n,
   .sig          (my_signal_in),
@@ -958,7 +958,7 @@ module my_module #(
 
   logic [Width-1:0] req_data_masked;
 
-  submodule u_submodule (
+  submodule submodule (
     .clk,
     .rst_n,
     .req_valid,
@@ -1505,7 +1505,7 @@ When connecting signals to ports for an instantiation, use the named port style,
 like this:
 
 ```systemverilog
-my_module i_my_instance (
+my_module my_module (
   .clk (clk_),
   .rst_n(rst_n),
   .d   (from_here),
@@ -1517,7 +1517,7 @@ If the port and the connecting signal have the same name, you can use the
 `.port` syntax (without parentheses) to indicate connectivity. For example:
 
 ```systemverilog
-my_module i_my_instance (
+my_module my_module (
   .clk,
   .rst_n,
   .d   (from_here),
@@ -1542,7 +1542,7 @@ Do not include whitespace after the opening parenthesis, or before the closing p
 
 :-1:
 ```systemverilog
-mod u_mod(
+mod mod(
   .clk,
   .rst_n,
 
@@ -1551,7 +1551,7 @@ mod u_mod(
   .sig_2( sig_2 )
 );
 
-mod u_mod(
+mod mod(
   .clk,
   .rst_n,
 
@@ -1578,7 +1578,7 @@ my_module #(
   // ...
 );
 
-my_reg #(16) my_reg0 (
+my_reg #(16) my_reg (
   .clk,
   .rst_n,
   .d(data_in),
@@ -1668,14 +1668,14 @@ Examples:
 
 &#x1f44d;
 ```systemverilog {.good}
-my_module i_module (
+my_module my_module (
   .thirty_two_bit_input({16'd0, sixteen_bit_word})
 );
 ```
 
 &#x1f44e;
 ```systemverilog {.bad}
-my_module i_module (
+my_module my_module (
   // Incorrectly implicitly extends from 16 bit to 32 bit
   .thirty_two_bit_input(sixteen_bit_word)
 );
@@ -2647,7 +2647,7 @@ module mymod (
   ...
 );
 
-  mymod_int u_mymod_int (
+  mymod_int mymod_int (
     .in0,
     .in1,
     .in2,
@@ -2655,7 +2655,7 @@ module mymod (
   );
 
   // Hierarchical references are prohibited in synthesizable RTL code.
-  assign intr = u_mymod_int.intr;
+  assign intr = mymod_int.intr;
 
 endmodule
 ```
