@@ -82,6 +82,7 @@ representation of this style guide.
       - [Hierarchical consistency](#hierarchical-consistency)
     - [Clocks](#clocks)
     - [Resets](#resets)
+    - [Module Instance Names](#module-instance-names)
   - [Language Features](#language-features)
     - [Preferred SystemVerilog Constructs](#preferred-systemverilog-constructs)
     - [Package Dependencies](#package-dependencies)
@@ -987,6 +988,7 @@ endmodule
 | ------------------------------------             | ----------------------- |
 | Declarations (module, class, package, interface) | `lower_snake_case`      |
 | Instance names                                   | `lower_snake_case`      |
+| Module instance names                            | `<module_name>[_suffix]` |
 | Signals (nets and ports)                         | `lower_snake_case`      |
 | Variables, functions, tasks                      | `lower_snake_case`      |
 | Named code blocks                                | `lower_snake_case`      |
@@ -1381,6 +1383,29 @@ always_ff @(posedge clk, negedge rst_n) begin
     q <= d;
   end
 end
+```
+
+### Module Instance Names
+
+Module instance names begin with the module name, i.e.: `<module_name>[_<suffix>]`.
+
+Rationale: While this is [Hungarian notation](https://en.wikipedia.org/wiki/Hungarian_notation) (which would usually be discouraged), many EDA tools (both GUIs and logs) do not indicate the types (module definitions) of instances.
+This convention makes it easier to understand design hierarchy.
+
+&#x1f44d;
+```systemverilog {.good}
+// GOOD: Prefixes start with module name.
+br_fifo_flops #(...) br_fifo_flops (...);  // OK when there is only one instance of br_fifo_flops
+br_fifo_flops #(...) br_fifo_flops_inbound (...);
+br_fifo_flops #(...) br_fifo_flops_outbound (...);
+```
+
+&#x1f44e;
+```systemverilog {.bad}
+// BAD: Prefixes do not start with module name.
+br_fifo_flops #(...) u_br_fifo_flops (...);
+br_fifo_flops #(...) fifo_inbound (...);
+br_fifo_flops #(...) fifo_inst (...);
 ```
 
 ## Language Features
