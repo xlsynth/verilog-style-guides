@@ -82,6 +82,7 @@ representation of this style guide.
       - [Hierarchical consistency](#hierarchical-consistency)
     - [Clocks](#clocks)
     - [Resets](#resets)
+    - [Module Instance Names](#module-instance-names)
   - [Language Features](#language-features)
     - [Preferred SystemVerilog Constructs](#preferred-systemverilog-constructs)
     - [Package Dependencies](#package-dependencies)
@@ -552,7 +553,7 @@ logic [7:0] something_else;
 
 :+1:
 ```systemverilog
-mod u_mod (
+mod mod (
   .clk,
   .rst,
   .sig          (my_signal_in),
@@ -957,7 +958,7 @@ module my_module #(
 
   logic [Width-1:0] req_data_masked;
 
-  submodule u_submodule (
+  submodule submodule (
     .clk,
     .rst,
     .req_valid,
@@ -983,16 +984,17 @@ endmodule
 
 ### Summary
 
-| Construct                                        | Style                   |
-| ------------------------------------             | ----------------------- |
-| Declarations (module, class, package, interface) | `lower_snake_case`      |
-| Instance names                                   | `lower_snake_case`      |
-| Signals (nets and ports)                         | `lower_snake_case`      |
-| Variables, functions, tasks                      | `lower_snake_case`      |
-| Named code blocks                                | `lower_snake_case`      |
-| \`define macros                                  | `ALL_CAPS`              |
-| Constants (parameters, localparams, enum values) | `UpperCamelCase`        |
-| Typedefs (including enums)                       | `lower_snake_case_t`    |
+| Construct                                        | Style                    |
+| ------------------------------------------------ | ------------------------ |
+| Declarations (module, class, package, interface) | `lower_snake_case`       |
+| Instance names                                   | `lower_snake_case`       |
+| Module instance names                            | `<module_name>[_suffix]` |
+| Signals (nets and ports)                         | `lower_snake_case`       |
+| Variables, functions, tasks                      | `lower_snake_case`       |
+| Named code blocks                                | `lower_snake_case`       |
+| \`define macros                                  | `ALL_CAPS`               |
+| Constants (parameters, localparams, enum values) | `UpperCamelCase`         |
+| Typedefs (including enums)                       | `lower_snake_case_t`     |
 
 ### Constants
 
@@ -1390,6 +1392,29 @@ always_ff @(posedge clk or negedge rst_n) begin
 end
 ```
 
+### Module Instance Names
+
+Module instance names begin with the module name, i.e.: `<module_name>[_<suffix>]`.
+
+Rationale: While this is [Hungarian notation](https://en.wikipedia.org/wiki/Hungarian_notation) (which would usually be discouraged), many EDA tools (both GUIs and logs) do not indicate the types (module definitions) of instances.
+This convention makes it easier to understand design hierarchy.
+
+&#x1f44d;
+```systemverilog {.good}
+// GOOD: Prefixes start with module name.
+br_fifo_flops #(...) br_fifo_flops (...);  // OK when there is only one instance of br_fifo_flops
+br_fifo_flops #(...) br_fifo_flops_inbound (...);
+br_fifo_flops #(...) br_fifo_flops_outbound (...);
+```
+
+&#x1f44e;
+```systemverilog {.bad}
+// BAD: Prefixes do not start with module name.
+br_fifo_flops #(...) u_br_fifo_flops (...);
+br_fifo_flops #(...) fifo_inbound (...);
+br_fifo_flops #(...) fifo_inst (...);
+```
+
 ## Language Features
 
 ### Preferred SystemVerilog Constructs
@@ -1487,7 +1512,7 @@ When connecting signals to ports for an instantiation, use the named port style,
 like this:
 
 ```systemverilog
-my_module i_my_instance (
+my_module my_module (
   .clk(clk_),
   .rst(rst),
   .d  (from_here),
@@ -1499,7 +1524,7 @@ If the port and the connecting signal have the same name, you can use the
 `.port` syntax (without parentheses) to indicate connectivity. For example:
 
 ```systemverilog
-my_module i_my_instance (
+my_module my_module (
   .clk,
   .rst,
   .d   (from_here),
@@ -1524,7 +1549,7 @@ Do not include whitespace after the opening parenthesis, or before the closing p
 
 :-1:
 ```systemverilog
-mod u_mod(
+mod mod(
   .clk,
   .rst,
 
@@ -1533,7 +1558,7 @@ mod u_mod(
   .sig_2( sig_2 )
 );
 
-mod u_mod(
+mod mod(
   .clk,
   .rst,
 
@@ -1560,7 +1585,7 @@ my_module #(
   // ...
 );
 
-my_reg #(16) my_reg0 (
+my_reg #(16) my_reg (
   .clk,
   .rst,
   .d(data_in),
@@ -1650,14 +1675,14 @@ Examples:
 
 &#x1f44d;
 ```systemverilog {.good}
-my_module i_module (
+my_module my_module (
   .thirty_two_bit_input({16'd0, sixteen_bit_word})
 );
 ```
 
 &#x1f44e;
 ```systemverilog {.bad}
-my_module i_module (
+my_module my_module (
   // Incorrectly implicitly extends from 16 bit to 32 bit
   .thirty_two_bit_input(sixteen_bit_word)
 );
@@ -2629,7 +2654,7 @@ module mymod (
   ...
 );
 
-  mymod_int u_mymod_int (
+  mymod_int mymod_int (
     .in0,
     .in1,
     .in2,
@@ -2637,7 +2662,7 @@ module mymod (
   );
 
   // Hierarchical references are prohibited in synthesizable RTL code.
-  assign intr = u_mymod_int.intr;
+  assign intr = mymod_int.intr;
 
 endmodule
 ```
